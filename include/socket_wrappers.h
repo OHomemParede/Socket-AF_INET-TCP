@@ -1,8 +1,10 @@
-#ifndef SOCKET_STUFF_H
-#define SOCKET_STUFF_H
+#ifndef SOCKET_WRAPPERS_H
+#define SOCKET_WRAPPERS_H
 
 #include <stdint.h>
 #include <netinet/in.h>
+#include <stdlib.h>
+
 
 
 /**

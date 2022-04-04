@@ -1,8 +1,8 @@
-CC=g++
+CC=gcc
 FLAG=-g -Wall
 SRC_PATH=./src
 OBJ_PATH=./objects
-OBJS=main.o socket_stuff.o
+OBJS=main.o socket_wrappers.o
 
 $(shell mkdir $(OBJ_PATH))
 

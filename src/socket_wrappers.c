@@ -2,14 +2,15 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <netinet/in.h>
-#include <cstdlib>
+#include <stdlib.h>
 
-#include "../include/socket_stuff.h"
+#include "../include/socket_wrappers.h"
 
 
 struct in_addr ipv4_addr(uint8_t oct1, uint8_t oct2, uint8_t oct3, uint8_t oct4){
     in_addr_t sum = 0;
-    in_addr address;
+    struct in_addr address;
+    
     sum += oct1;
     sum = sum << 8;
 
@@ -60,6 +61,7 @@ int create_socket_fd(){
 
 
 
+
 struct sockaddr_in do_a_bind(int socket_file_descriptor, uint16_t port){
     struct sockaddr_in addr;
     int bind_status;
@@ -68,6 +70,15 @@ struct sockaddr_in do_a_bind(int socket_file_descriptor, uint16_t port){
     addr.sin_family = AF_INET; // int
     addr.sin_port = port; // uint16_t
     addr.sin_addr = ipv4_addr(0, 0, 0, 0); // uint32_t
+
+    // Algumas vezes ao encerrar o servidor, é possível que fique resquícios de sua existencia no kernel,
+    // impossibilitando o uso do endereço e porta que o socket tinha dado bind. Se esse for o caso, tenta 
+    // reutilizá-los
+    int boolean = 1; // opção booleana (sim, no caso)
+    if(setsockopt(socket_file_descriptor, SOL_SOCKET, SO_REUSEADDR, &boolean, sizeof(boolean)) == -1) { 
+      perror("new_tcp_server: setsockopt");
+      exit(EXIT_FAILURE);
+    }
 
     bind_status = bind(socket_file_descriptor, (struct sockaddr *)&addr, sizeof(addr));
     if (bind_status != 0) {

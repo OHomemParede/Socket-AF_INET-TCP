@@ -2,12 +2,11 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <netinet/in.h>
-#include <cstdlib>
+#include <stdlib.h>
 
-#include "../include/socket_stuff.h"
+#include "../include/socket_wrappers.h"
 
 #define PORT 1337
-
 
 int main(){
     int listen_status, connection;
