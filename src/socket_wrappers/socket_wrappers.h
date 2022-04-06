@@ -6,25 +6,23 @@
 #include <stdlib.h>
 
 
-
 /**
  * @brief Create a socket fd object
  * 
- * @return int - socket_file_descriptor
+ * @param addr - address
+ * @param port - port
  */
-int create_socket_fd();
+create_socket_fd(const char *addr, const char *port);
 
 
 /**
- * @brief receive four Bytes and returns a ipv4 32bits like.
+ * @brief receive four Bytes and returns a ipv4 32bits like,
+ * in Big-endian notation.
  * 
- * @param oct1 
- * @param oct2 
- * @param oct3 
- * @param oct4 
- * @return struct in_addr - address
+ * @param bytes -
+ * @return struct in_addr 
  */
-struct in_addr ipv4_addr(uint8_t oct1, uint8_t oct2, uint8_t oct3, uint8_t oct4);
+struct in_addr ipv4_addr(uint8_t *bytes);
 
 
 /**
@@ -34,7 +32,7 @@ struct in_addr ipv4_addr(uint8_t oct1, uint8_t oct2, uint8_t oct3, uint8_t oct4)
  * @param port is a int (0 - 2**16 -1)
  * @return struct sockaddr_in - addr
  */
-struct sockaddr_in do_a_bind(int socket_file_descriptor, uint16_t port);
+struct sockaddr_in binder(int socket_file_descriptor, uint16_t port);
 
 
 #endif
