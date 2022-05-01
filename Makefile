@@ -9,7 +9,7 @@ main:
 	$(CC) $(FLAG) -c src/utils/utils.c -o objects/utils.o
 
 	$(CC) $(FLAG) -o main.out objects/*.o
-	chmod 700 main
+	chmod 700 main.out
 
 
 clean:
