@@ -1,21 +1,18 @@
 CC=gcc
 FLAG=-g -Wall
-SRC_PATH=./src
-OBJ_PATH=./objects
-OBJS=main.o socket_wrappers.o
 
 $(shell mkdir $(OBJ_PATH))
 
-%.o: $(SRC_PATH)/%.cpp
-	$(CC) $(FLAG) -c $^ -o $(OBJ_PATH)/$@
+main:
+	$(CC) $(FLAG) -c src/main.c -o objects/main.o
+	$(CC) $(FLAG) -c src/socket_wrappers/socket_wrappers.c objects/socket_wrappers.o
+	$(CC) $(FLAG) -c src/utils/utils.c objects/utils.o
 
-
-main: $(OBJS)
-	$(CC) $(FLAG) -o main $(OBJ_PATH)/*.o
+	$(CC) $(FLAG) -o main objects/*.o
 	chmod 700 main
 
 
 clean:
 	rm -f main
-	rm -f $(OBJ_PATH)/*.o
+	rm -f objects/*.o
 	
