@@ -6,6 +6,6 @@
  * 
  * @param error_msg 
  */
-void raise_panic(const char* error_msg);
+void raise_panic(char* error_msg);
 
 #endif
