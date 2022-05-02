@@ -34,4 +34,12 @@ struct in_addr get_ipv4_addr(uint8_t *bytes);
 struct sockaddr_in binder(int socket_fd, uint16_t port);
 
 
+/**
+ * @brief just run socket listen 
+ * 
+ * @param socket_fd 
+ * @param queue 
+ */
+void start_listen(int socket_fd, int queue);
+
 #endif

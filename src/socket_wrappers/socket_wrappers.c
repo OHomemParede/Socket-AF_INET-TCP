@@ -60,3 +60,11 @@ struct sockaddr_in binder(int socket_fd, uint16_t port){
 
     return addr;
 }
+
+
+void start_listen(int socket_fd, int queue){
+    int listen_status;
+    listen_status = listen(socket_fd, 3);
+    if(listen_status == -1)
+        raise_panic("Failed to listen.");
+}
