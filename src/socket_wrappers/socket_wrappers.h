@@ -21,17 +21,18 @@ int create_socket_fd();
  * @param bytes is a vector of size 4 
  * @return struct in_addr 
  */
-struct in_addr get_ipv4_addr(uint8_t *bytes);
+struct in_addr get_ipv4_addr(uint8_t host[4]);
 
 
 /**
  * @brief this operation is called “assigning a name to a socket”
  * 
  * @param socket_fd 
+ * @param host address ipv4
  * @param port is a in range of (0 - 2**16 -1)
  * @return struct sockaddr_in - addr
  */
-struct sockaddr_in binder(int socket_fd, uint16_t port);
+struct sockaddr_in binder(int socket_fd, uint8_t host[4], uint16_t port);
 
 
 /**

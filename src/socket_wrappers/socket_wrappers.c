@@ -22,15 +22,15 @@ int create_socket_fd(){
 }
 
 
-struct in_addr get_ipv4_addr(uint8_t *bytes){
+struct in_addr get_ipv4_addr(uint8_t host[4]){
     in_addr_t ipv4 = 0x00000000;
     struct in_addr address;
     
     for(int i=0; i<3; i++){
-        ipv4 += bytes[i];
+        ipv4 += host[i];
         ipv4 = ipv4 << 8;
     }
-    ipv4 += bytes[3];
+    ipv4 += host[3];
 
     // converting to big-endian notation.
     ipv4 = htonl(ipv4);
@@ -41,15 +41,14 @@ struct in_addr get_ipv4_addr(uint8_t *bytes){
 }
 
 
-struct sockaddr_in binder(int socket_fd, uint16_t port){
+struct sockaddr_in binder(int socket_fd, u_int8_t host[4], uint16_t port){
     struct sockaddr_in addr;
     int bind_status;
-    uint8_t ipv4_address[4] = {127,0,0,1};
 
     // _____________________Procedimento de bind._____________________
     addr.sin_family = AF_INET;                   // int
     addr.sin_port = htons(port);                 // uint16_t
-    addr.sin_addr = get_ipv4_addr(ipv4_address); // uint32_t
+    addr.sin_addr = get_ipv4_addr(host);         // uint32_t
 
 
     bind_status = bind(socket_fd, (struct sockaddr *)&addr, sizeof(addr));
