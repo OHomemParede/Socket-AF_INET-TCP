@@ -9,30 +9,29 @@
 /**
  * @brief Create a socket fd object
  * 
- * @param addr - address
- * @param port - port
+ * @return socket file descriptor
  */
-create_socket_fd(const char *addr, const char *port);
+int create_socket_fd();
 
 
 /**
  * @brief receive four Bytes and returns a ipv4 32bits like,
  * in Big-endian notation.
  * 
- * @param bytes -
+ * @param bytes is a vector of size 4 
  * @return struct in_addr 
  */
-struct in_addr ipv4_addr(uint8_t *bytes);
+struct in_addr get_ipv4_addr(uint8_t *bytes);
 
 
 /**
  * @brief this operation is called “assigning a name to a socket”
  * 
- * @param socket_file_descriptor 
- * @param port is a int (0 - 2**16 -1)
+ * @param socket_fd 
+ * @param port is a in range of (0 - 2**16 -1)
  * @return struct sockaddr_in - addr
  */
-struct sockaddr_in binder(int socket_file_descriptor, uint16_t port);
+struct sockaddr_in binder(int socket_fd, uint16_t port);
 
 
 #endif
