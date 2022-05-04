@@ -40,30 +40,32 @@ struct in_addr get_ipv4_addr(uint8_t host[4]){
     return address;
 }
 
-
-struct sockaddr_in binder(int socket_fd, u_int8_t host[4], uint16_t port){
+struct sockaddr_in get_addr(u_int8_t host[4], uint16_t port){
     struct sockaddr_in addr;
-    int bind_status;
 
     // _____________________Procedimento de bind._____________________
     addr.sin_family = AF_INET;                   // int
     addr.sin_port = htons(port);                 // uint16_t
     addr.sin_addr = get_ipv4_addr(host);         // uint32_t
 
+    return addr;
+}
+
+
+binder(int socket_fd, struct sockaddr_in addr){
+    int bind_status;
 
     bind_status = bind(socket_fd, (struct sockaddr *)&addr, sizeof(addr));
     if (bind_status != 0) 
         raise_panic("socket bind failed");
     
     printf("Socket successfully binded. - bind_status: %d\n", bind_status);
-
-    return addr;
 }
 
 
 void start_listen(int socket_fd, int queue){
     int listen_status;
-    listen_status = listen(socket_fd, 3);
+    listen_status = listen(socket_fd, 1);
     if(listen_status == -1)
         raise_panic("Failed to listen.");
 }

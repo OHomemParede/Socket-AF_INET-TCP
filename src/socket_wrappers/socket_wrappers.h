@@ -25,14 +25,22 @@ struct in_addr get_ipv4_addr(uint8_t host[4]);
 
 
 /**
+ * @brief Get the addr object
+ * 
+ * @param host address ipv4
+ * @param port is a in range of (0 - 2**16 -1)
+ * @return struct sockaddr_in 
+ */
+struct sockaddr_in get_addr(u_int8_t host[4], uint16_t port);
+
+
+/**
  * @brief this operation is called “assigning a name to a socket”
  * 
  * @param socket_fd 
- * @param host address ipv4
- * @param port is a in range of (0 - 2**16 -1)
- * @return struct sockaddr_in - addr
+ * @param addr
  */
-struct sockaddr_in binder(int socket_fd, uint8_t host[4], uint16_t port);
+binder(int socket_fd, struct sockaddr_in addr);
 
 
 /**
