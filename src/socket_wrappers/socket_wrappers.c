@@ -65,7 +65,7 @@ binder(int socket_fd, struct sockaddr_in addr){
 
 void start_listen(int socket_fd, int queue){
     int listen_status;
-    listen_status = listen(socket_fd, 1);
+    listen_status = listen(socket_fd, queue);
     if(listen_status == -1)
         raise_panic("Failed to listen.");
 }
