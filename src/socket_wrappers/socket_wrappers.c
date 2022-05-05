@@ -52,14 +52,14 @@ struct sockaddr_in get_addr(u_int8_t host[4], uint16_t port){
 }
 
 
-binder(int socket_fd, struct sockaddr_in addr){
+void binder(int socket_fd, struct sockaddr_in addr){
     int bind_status;
 
     bind_status = bind(socket_fd, (struct sockaddr *)&addr, sizeof(addr));
     if (bind_status != 0) 
         raise_panic("socket bind failed");
     
-    printf("Socket successfully binded. - bind_status: %d\n", bind_status);
+    fprintf(stdout, "Socket successfully binded. - bind_status: %d\n", bind_status);
 }
 
 

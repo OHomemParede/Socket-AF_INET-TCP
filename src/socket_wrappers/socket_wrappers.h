@@ -40,7 +40,7 @@ struct sockaddr_in get_addr(u_int8_t host[4], uint16_t port);
  * @param socket_fd 
  * @param addr
  */
-binder(int socket_fd, struct sockaddr_in addr);
+void binder(int socket_fd, struct sockaddr_in addr);
 
 
 /**
