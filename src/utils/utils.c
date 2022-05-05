@@ -16,6 +16,6 @@ colors_t global_colors = {
 };
 
 void raise_panic(char *error_msg) {
-  fprintf(stderr, "Error: { %s }\n", error_msg);
+  fprintf(stderr, "%sError: { %s }%s\n", global_colors.red, error_msg, global_colors.end);
   exit(EXIT_FAILURE);
 }
