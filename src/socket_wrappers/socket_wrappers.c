@@ -79,3 +79,20 @@ void start_listen(int socket_fd, int queue){
         raise_panic("Failed to listen.");
     }
 }
+
+
+int accept_client(int socket_fd, struct sockaddr_in addr, socklen_t addrlen){
+    int client_socket_fd;
+    client_socket_fd = accept(
+        socket_fd,
+        (struct sockaddr *)&addr,
+        &addrlen
+    );
+
+    if(client_socket_fd == -1){
+        close(client_socket_fd);
+        raise_panic("Unable to accept client.");
+    }
+
+    return client_socket_fd;
+}

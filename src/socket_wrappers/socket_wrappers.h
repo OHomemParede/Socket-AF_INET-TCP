@@ -51,4 +51,16 @@ void binder(int socket_fd, struct sockaddr_in addr);
  */
 void start_listen(int socket_fd, int queue);
 
+
+/**
+ * @brief accept a connection.
+ * 
+ * @param socket_fd 
+ * @param addr address struct
+ * @param addrlen len of addr
+ * 
+ * @return client's file descriptor
+ */
+int accept_client(int socket_fd, struct sockaddr_in addr, socklen_t addrlen);
+
 #endif
