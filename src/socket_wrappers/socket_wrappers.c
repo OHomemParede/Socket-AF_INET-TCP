@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -56,16 +57,25 @@ void binder(int socket_fd, struct sockaddr_in addr){
     int bind_status;
 
     bind_status = bind(socket_fd, (struct sockaddr *)&addr, sizeof(addr));
-    if (bind_status != 0) 
+    if (bind_status != 0) {
+        close(socket_fd);
         raise_panic("socket bind failed");
+    }
     
-    fprintf(stdout, "Socket successfully binded. - bind_status: %d\n", bind_status);
+    fprintf(
+        stdout, 
+        "%sSocket successfully binded (Chat Created!).%s\n", 
+        global_colors.green,
+        global_colors.end
+    );
 }
 
 
 void start_listen(int socket_fd, int queue){
     int listen_status;
     listen_status = listen(socket_fd, queue);
-    if(listen_status == -1)
+    if(listen_status == -1){
+        close(socket_fd);
         raise_panic("Failed to listen.");
+    }
 }
