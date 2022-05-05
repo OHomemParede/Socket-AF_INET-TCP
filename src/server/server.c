@@ -9,14 +9,12 @@
 
 #include "../socket_wrappers/socket_wrappers.h"
 #include "../utils/utils.h"
+#include "./server.h"
 
+start_server_result_t start_server(uint8_t host[4], uint16_t port){
 
-void start_server(uint8_t host[4], uint16_t port){
-
-    int socket_fd, 
-        bind_status,
-        client_socket_fd,
-        received_bytes;
+    start_server_result_t result;
+    int socket_fd, client_socket_fd;
     
     struct sockaddr_in addr;
     socklen_t addrlen;
@@ -29,39 +27,13 @@ void start_server(uint8_t host[4], uint16_t port){
     binder(socket_fd, addr);
 
     start_listen(socket_fd, 1);
-    client_socket_fd = accept(
-        socket_fd,
-        (struct sockaddr *)&addr,
-        &addrlen
-    );
-
-
-
-    // ================= cht protocol =======
-    char buffer[1024];
-    uint16_t data_size;
-
-    // recv hi
-    memset(buffer, '\x00', sizeof(buffer));
-    data_size = recv(client_socket_fd, buffer, sizeof(buffer), 0);
-    fprintf(stdout, "[data_size: %d] < %s\n", data_size, buffer);
-
-    // send hi
-    memset(buffer, '\x00', sizeof(buffer));
-    buffer[0] = 'B';
-    data_size = send(client_socket_fd, buffer, strlen(buffer), 0);
-    fprintf(stdout, "[data_size: %d] > %s\n", data_size, buffer);
-
-    // recv whatever
-    memset(buffer, '\x00', sizeof(buffer));
-    data_size = recv(client_socket_fd, buffer, sizeof(buffer), 0);
-    fprintf(stdout, "[data_size: %d] < %s\n", data_size, buffer);
-
-
-    memset(buffer, '\x00', sizeof(buffer));
-    data_size = recv(client_socket_fd, buffer, sizeof(buffer), 0);
-    fprintf(stdout, "[data_size: %d] < %s\n", data_size, buffer);
-
     
+    printf("> %d\n", client_socket_fd);
+    close(client_socket_fd);
     close(socket_fd);
+
+    result.socket_fd = socket_fd;
+    result.client_socket_fd = client_socket_fd;
+    return result;
+
 }

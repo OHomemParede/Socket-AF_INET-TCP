@@ -33,16 +33,19 @@ void start_client(uint8_t host[4], uint16_t port){
         fflush(stdout);
         connect_status = connect(socket_fd, (struct sockaddr *)&addr, sizeof(addr));
         if(connect_status == 0){
-            fprintf(stdout, "\nSuccess connected.\n");
+            fprintf(stdout, "\n%sSuccessfully connected.%s\n", global_colors.green, global_colors.end);
             break;
         }
+        if(try_count == 3){
+            close(socket_fd);
+            raise_panic("Unable to connect to char server.");
+        }
         sleep(2); 
-
     }
     while(TRUE);
     
 
-    char buffer[1024];
+    char buffer[5];
     uint16_t data_size;
 
     // send hi
