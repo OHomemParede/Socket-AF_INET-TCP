@@ -1,5 +1,5 @@
 
-#define MAX_BUFFER_SIZE (1024 + 1)
+#define MAX_BUFFER_SIZE (1024)
 
 
 /**
