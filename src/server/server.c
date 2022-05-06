@@ -27,13 +27,10 @@ start_server_result_t start_server(uint8_t host[4], uint16_t port){
     binder(socket_fd, addr);
 
     start_listen(socket_fd, 1);
-    
-    printf("> %d\n", client_socket_fd);
-    close(client_socket_fd);
-    close(socket_fd);
 
+    client_socket_fd = accept_client(socket_fd, addr, addrlen);
+    
     result.socket_fd = socket_fd;
     result.client_socket_fd = client_socket_fd;
     return result;
-
 }
