@@ -4,6 +4,7 @@
 #include "./server/server.h"
 #include "./client/client.h"
 #include "./utils/utils.h"
+#include "./chat/chat.h"
 
 
 int main(int argc, char **argv){
@@ -16,12 +17,15 @@ int main(int argc, char **argv){
         
         start_server_result_t sockets_fd;
         sockets_fd = start_server(host, 9001);
-
+        host_chat(sockets_fd);
     }
 
     if(!strncmp(argv[1], "client", 6)){
-        start_client(host, 9001);
+        int socket_fd;
 
+        socket_fd = start_client(host, 9001);
+        
+        client_chat(socket_fd);
     }
     return 0;
 }
