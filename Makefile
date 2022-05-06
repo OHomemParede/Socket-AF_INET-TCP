@@ -9,6 +9,7 @@ main:
 	$(CC) $(FLAG) -c src/utils/utils.c -o objects/utils.o
 	$(CC) $(FLAG) -c src/server/server.c -o objects/server.o
 	$(CC) $(FLAG) -c src/client/client.c -o objects/client.o
+	$(CC) $(FLAG) -c src/chat/chat.c -o objects/chat.o
 
 	$(CC) $(FLAG) -o main.out objects/*.o
 	chmod 700 main.out
