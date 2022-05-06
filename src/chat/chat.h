@@ -9,7 +9,7 @@
  * @param payload input
  * @param socket_fd 
  */
-void communicate_send(char *buffer, char *payload, int socket_fd);
+void communicate_send(char buffer[MAX_BUFFER_SIZE], char payload[MAX_BUFFER_SIZE], int socket_fd);
 
 /**
  * @brief receive a msg from a socket
@@ -17,7 +17,7 @@ void communicate_send(char *buffer, char *payload, int socket_fd);
  * @param buffer 
  * @param socket_fd 
  */
-void communicate_recv(char *buffer, int socket_fd);
+void communicate_recv(char buffer[MAX_BUFFER_SIZE], int socket_fd);
 
 /**
  * @brief hosts a chat.
