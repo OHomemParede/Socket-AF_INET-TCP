@@ -14,7 +14,7 @@ void communicate_send(char buffer[MAX_BUFFER_SIZE], char payload[MAX_BUFFER_SIZE
     memset(buffer, '\x00', MAX_BUFFER_SIZE);
     strncpy(buffer, payload, MAX_BUFFER_SIZE);
 
-    data_size = send(socket_fd, buffer, MAX_BUFFER_SIZE, 0);
+    data_size = send(socket_fd, buffer, strlen(buffer), 0);
     fprintf(
         stdout, 
         "%s[data_size: %d] -> %s%s\n", 
