@@ -10,7 +10,7 @@
 #include "../socket_wrappers/socket_wrappers.h"
 #include "../utils/utils.h"
 
-void start_client(uint8_t host[4], uint16_t port){
+int start_client(uint8_t host[4], uint16_t port){
     int socket_fd;
     struct sockaddr_in addr;
     int8_t connect_status;
@@ -43,28 +43,6 @@ void start_client(uint8_t host[4], uint16_t port){
         sleep(2); 
     }
     while(TRUE);
-    
 
-    char buffer[5];
-    uint16_t data_size;
-
-    // send hi
-    memset(buffer, '\x00', sizeof(buffer));
-    buffer[0] = 'A';
-    data_size = send(socket_fd, buffer, strlen(buffer), 0);
-    fprintf(stdout, "[data_size: %d] > %s\n", data_size, buffer);
-
-
-    // recv hi
-    memset(buffer, '\x00', sizeof(buffer));
-    data_size = recv(socket_fd, buffer, sizeof(buffer), 0);
-    fprintf(stdout, "[data_size: %d] < %s\n", data_size, buffer);
-
-    // send whatwever
-    memset(buffer, '\x00', sizeof(buffer));
-    fgets(buffer, sizeof(buffer), stdin);
-    data_size = send(socket_fd, buffer, strlen(buffer), 0);
-    fprintf(stdout, "[data_size: %d] > %s\n", data_size, buffer);
-
-    close(socket_fd);
+    return socket_fd;
 }
