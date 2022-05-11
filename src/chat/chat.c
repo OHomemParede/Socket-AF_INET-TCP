@@ -44,6 +44,8 @@ void host_chat(start_server_result_t sockets){
     memset(payload, '\x00', MAX_BUFFER_SIZE);
     memset(buffer, '\x00', MAX_BUFFER_SIZE);
 
+    fprintf(stdout, "chat commands: !u !end\n");
+
     while(TRUE){
 
         do {
@@ -92,6 +94,8 @@ void client_chat(int socket_fd){
 
     memset(payload, '\x00', MAX_BUFFER_SIZE);
     memset(buffer, '\x00', MAX_BUFFER_SIZE);
+
+    fprintf(stdout, "chat commands: !u !end\n");
 
     while(TRUE){
 

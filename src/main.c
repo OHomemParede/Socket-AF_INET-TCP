@@ -28,7 +28,7 @@ int main(int argc, char **argv){
 
     
 
-    if(!strncmp(argv[1], "server", 6)){
+    if(strn_equals(argv[1], "server", 6)){
         start_server_result_t sockets_fd;
     
         printf("PID: %d\n", pid);
@@ -37,7 +37,7 @@ int main(int argc, char **argv){
         host_chat(sockets_fd);
     }
 
-    else if(!strncmp(argv[1], "client", 6)){
+    else if(strn_equals(argv[1], "client", 6)){
         int socket_fd;
 
         printf("PID: %d\n", pid);
