@@ -1,4 +1,4 @@
-# small-talk-chat
+# Socket-AF_INET-TCP
 Using socket API to create a client-server application.
 
 bibliography:
