@@ -5,11 +5,10 @@
 /**
  * @brief send a msg
  * 
- * @param buffer socket buffer
  * @param payload input
  * @param socket_fd 
  */
-void communicate_send(char buffer[MAX_BUFFER_SIZE], char payload[MAX_BUFFER_SIZE], int socket_fd);
+void communicate_send(char payload[MAX_BUFFER_SIZE], int socket_fd);
 
 /**
  * @brief receive a msg from a socket

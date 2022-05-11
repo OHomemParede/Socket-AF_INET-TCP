@@ -8,19 +8,16 @@
 #include "../utils/utils.h"
 #include "./chat.h"
 
-void communicate_send(char buffer[MAX_BUFFER_SIZE], char payload[MAX_BUFFER_SIZE], int socket_fd){
+void communicate_send(char payload[MAX_BUFFER_SIZE], int socket_fd){
     uint16_t data_size;
 
-    memset(buffer, '\x00', MAX_BUFFER_SIZE);
-    strncpy(buffer, payload, MAX_BUFFER_SIZE);
-
-    data_size = send(socket_fd, buffer, strlen(buffer), 0);
+    data_size = send(socket_fd, payload, strlen(payload), 0);
     fprintf(
         stdout, 
         "%s[data_size: %d] -> %s%s\n", 
         global_colors.cyan, 
         data_size,
-        buffer, 
+        payload, 
         global_colors.end
     );
 }
@@ -42,24 +39,99 @@ void communicate_recv(char buffer[MAX_BUFFER_SIZE], int socket_fd){
 
 void host_chat(start_server_result_t sockets){
     char buffer[MAX_BUFFER_SIZE];
+    char payload[MAX_BUFFER_SIZE];
 
-    communicate_recv(buffer, sockets.client_socket_fd);
+    memset(payload, '\x00', MAX_BUFFER_SIZE);
+    memset(buffer, '\x00', MAX_BUFFER_SIZE);
 
-    char payload[MAX_BUFFER_SIZE]={'\x00'};
-    fgets(payload, MAX_BUFFER_SIZE, stdin);
-    communicate_send(buffer, payload, sockets.client_socket_fd);
+    while(TRUE){
 
+        do {
+            communicate_recv(buffer, sockets.client_socket_fd);
+            if(strn_equals(buffer, "!u", 2) || strn_equals(buffer, "!end", 4))
+                break;
+            sleep(1);
+        }
+        while(TRUE);
+        if(strn_equals(buffer, "!end", 4)) {
+            fprintf(
+                stdout,
+                "%sConnection closed by client.%s\n",
+                global_colors.red,
+                global_colors.end
+            );
+            break;
+        }
+
+        do {
+            memset(payload, '\x00', MAX_BUFFER_SIZE);
+            fprintf(stdout, "> ");
+            fgets(payload, MAX_BUFFER_SIZE, stdin);
+            communicate_send(payload, sockets.client_socket_fd);
+
+            if(strn_equals(payload, "!u", 2) || strn_equals(payload, "!end", 4))
+                break;
+        }
+        while(TRUE);
+        if(strn_equals(payload, "!end", 4)) {
+            fprintf(
+                stdout,
+                "%sConnection closed.%s\n",
+                global_colors.red,
+                global_colors.end
+            );
+            break;
+        }
+    }
     close(sockets.socket_fd);
 }
 
 void client_chat(int socket_fd){
     char buffer[MAX_BUFFER_SIZE];
+    char payload[MAX_BUFFER_SIZE];
 
-    char payload[MAX_BUFFER_SIZE]={'\x00'};
-    fgets(payload, MAX_BUFFER_SIZE, stdin);
-    communicate_send(buffer, payload, socket_fd);
+    memset(payload, '\x00', MAX_BUFFER_SIZE);
+    memset(buffer, '\x00', MAX_BUFFER_SIZE);
 
-    communicate_recv(buffer, socket_fd);
+    while(TRUE){
 
+        do {
+            memset(payload, '\x00', MAX_BUFFER_SIZE);
+            fprintf(stdout, "> ");
+            fgets(payload, MAX_BUFFER_SIZE, stdin);
+            communicate_send(payload, socket_fd);
+
+            if(strn_equals(payload, "!u", 2) || strn_equals(payload, "!end", 4))
+                break;
+        }
+        while(TRUE);
+        
+        if(strn_equals(payload, "!end", 4)) {
+            fprintf(
+                stdout,
+                "%sConnection closed.%s\n",
+                global_colors.red,
+                global_colors.end
+            );
+            break;
+        }
+
+        do{
+            communicate_recv(buffer, socket_fd);
+            if(strn_equals(buffer, "!u", 2) || strn_equals(buffer, "!end", 4))
+                break;
+            sleep(1);
+        }
+        while(TRUE);
+        if(strn_equals(buffer, "!end", 4)) {
+            fprintf(
+                stdout,
+                "%sConnection closed by server.%s\n",
+                global_colors.red,
+                global_colors.end
+            );
+            break;
+        }
+    }
     close(socket_fd);
 }
