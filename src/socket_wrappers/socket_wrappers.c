@@ -41,6 +41,7 @@ struct in_addr get_ipv4_addr(uint8_t host[4]){
     return address;
 }
 
+
 struct sockaddr_in get_addr(u_int8_t host[4], uint16_t port){
     struct sockaddr_in addr;
 
